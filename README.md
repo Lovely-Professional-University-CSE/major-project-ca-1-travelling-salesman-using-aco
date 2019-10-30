@@ -17,8 +17,11 @@ solution: exact algorithms or heuristics.
 --------------------PROBABILITY OF AN ANT TO FOLLOW A PATH IS:
 
 probability(i,j) = ( (tau(i,j))^alpha * (eta(i,j))^beta )/sigma((tau(i,j))^alpha * (eta(i,j))^beta)
+
 (in the code):
+
 sum_pheromene_eta =  np.sum((((pheromene)**alpha)*((eta)**beta)))
+
 prob = (((pheromene[i][j])**alpha)*((eta[i][j])**beta))/(sum_pheromene_eta)
 
 tau(i,j) is the pheromene on the node (i,j)
@@ -29,6 +32,7 @@ beta is is a parameter to control the influence of eta(i,j)
 --------------------PHEROMENE UPDATION ON THE NODE:
 
 tau(i,j) = (1-rho)*tau(i,j) + sigma(delta(tau(i,j)))
+
 (in the code)
  sum_pheromene[axis_list[i-1]][axis_list[i]] = sum_pheromene[axis_list[i-1]][axis_list[i]] 
         + (pheromene[axis_list[i-1]][axis_list[i]]/total_distance)
