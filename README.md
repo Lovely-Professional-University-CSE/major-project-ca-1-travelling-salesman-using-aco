@@ -25,8 +25,11 @@ sum_pheromene_eta =  np.sum((((pheromene)**alpha)*((eta)**beta)))
 prob = (((pheromene[i][j])**alpha)*((eta[i][j])**beta))/(sum_pheromene_eta)
 
 tau(i,j) is the pheromene on the node (i,j)
+
 eta(i,j) is the viibility or desirability on the the node(i,j) which is equal to (1/distance(i,j))
+
 alpha is the parameter to control the influence of tau(i,j)
+
 beta is is a parameter to control the influence of eta(i,j)
 
 --------------------PHEROMENE UPDATION ON THE NODE:
