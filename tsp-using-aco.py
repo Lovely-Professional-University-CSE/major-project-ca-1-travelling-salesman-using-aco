@@ -42,5 +42,6 @@ a = [x[0]]
 b = [y[0]]
 
 axis_list = [0]
+total_distance = []
 number_of_ants = 10
 
