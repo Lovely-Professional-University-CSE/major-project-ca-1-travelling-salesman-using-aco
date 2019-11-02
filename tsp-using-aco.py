@@ -45,3 +45,121 @@ axis_list = [0]
 total_distance = []
 number_of_ants = 10
 
+__ = 1
+while(__ <= number_of_ants):
+#initial pheromene
+#------------------------------------------------probabiltiy--------------------------------------------
+
+    for i in range(0,5):
+        for j in range(0,5):
+            if(distance[i][j] == 0):
+                eta[i][j] = 0
+            else:
+                eta[i][j] = (1/distance[i][j]) 
+
+    sum_pheromene_eta =  np.sum((((pheromene)**alpha)*((eta)**beta)))
+
+#-------------------------------------------probability of path i,j----------------------------------------
+    def probability(alpha,beta,i,j):
+        prob = (((pheromene[i][j])**alpha)*((eta[i][j])**beta))/(sum_pheromene_eta)
+        return prob
+        
+#-------------------------------------------probability of everynode------------------------------------------        
+    prob = []
+    for i in range(0,5):
+        for j in range(0,5):
+            temp = 0
+            temp = probability(1,2,i,j)
+            prob.append(temp)
+
+    prob = np.array(prob)
+    prob = prob.reshape(5,5)
+    print(prob)
+
+#------------------------------------------------cumulative probability---------------------------------------------
+    temp = 0
+    axis = 0 
+    
+    cumulative_lst = []
+    
+    a = [x[0]]
+    b = [y[0]]
+
+    axis_list = [0]
+
+    _ = 0
+    while(_ <= 5):
+        temp = 0
+        prob1 = []
+        for i in range(5):
+            temp = temp + prob[(axis+1)-1:(axis+1)][0][i]
+            prob1.append(temp)   
+        random_nno = np.random.uniform(0,np.max(prob1))
+        temp = 0
+        for i in range(5):
+            if(prob1[i] > random_nno):
+                seal_prob = prob1[i]
+                break
+
+        c = np.where(prob1 == seal_prob)
+        axis = c[0][0]
+
+        if(np.isin(axis,axis_list) == False):
+            axis_list.append(axis)
+            a.append(x[axis])
+            b.append(y[axis])
+            _ += 1
+
+            if(len(axis_list) == 5):
+                break
+        else:
+            continue
+    print(a)
+    print(b)
+
+# ---------------------------------------total path distance---------------------------------------------
+    temp = 0
+    for i in range(1,len(a)):
+        temp = temp + ((a[i] - a[i-1])**2 + (b[i] - b[i-1])**2)**0.5
+
+    for i  in range(len(axis_list)):
+        print('-',axis_list[i],end = '')
+    print()
+    total_distance1 = temp
+    print('---------------------------total distance-----------------------------',total_distance1)
+    total_distance.append(total_distance1)
+    
+    
+    x1_axis = []
+    y1_axis = []
+    for i in range(len(axis_list)):
+        x1_axis.append(x[axis_list[i]])
+        y1_axis.append(y[axis_list[i]])
+        #print()
+
+        plt.scatter(x1_axis,y1_axis,s = 40)
+        plt.text(x[i] ,y[i] ,cities[i],fontsize = 12)
+        plt.plot([x1_axis[i-1],x1_axis[i]],[y1_axis[i-1],y1_axis[i]],linewidth = 0.7);
+    
+    plt.plot([x1_axis[4],x1_axis[0]],[y1_axis[4],y1_axis[0]],linewidth = 0.7); 
+    plt.xlim(0,100)
+    plt.ylim(0,100)
+    plt.show()
+
+
+    for i in range(1,len(axis_list)):
+        sum_pheromene[axis_list[i-1]][axis_list[i]] = sum_pheromene[axis_list[i-1]][axis_list[i]] 
+        + (pheromene[axis_list[i-1]][axis_list[i]]/total_distance)
+
+        pheromene[axis_list[i-1]][axis_list[i]] = (1 - rho)*pheromene[axis_list[i-1]][axis_list[i]] 
+        + sum_pheromene[axis_list[i-1]][axis_list[i]]
+
+    pheromene[axis_list[4]][axis_list[0]] = (1 - rho)*pheromene[axis_list[4]][axis_list[0]] + sum_pheromene[axis_list[4]][axis_list[0]]
+
+    print(pheromene)
+
+    __ += 1
+    
+    print()
+    print(total_distance)
+    print(' the minimum distance is:',np.min(total_distance))
