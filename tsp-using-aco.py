@@ -125,8 +125,10 @@ while(__ <= number_of_ants):
         temp = temp + ((a[i] - a[i-1])**2 + (b[i] - b[i-1])**2)**0.5
 
     for i  in range(len(axis_list)):
-        print('-',axis_list[i],end = '')
+        print('-',cities[axis_list[i]],end = '')
+    print('- MUMBAI')
     print()
+    
     total_distance1 = temp
     print('---------------------------total distance-----------------------------',total_distance1)
     total_distance.append(total_distance1)
