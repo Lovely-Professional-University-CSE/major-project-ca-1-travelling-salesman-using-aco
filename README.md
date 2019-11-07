@@ -14,6 +14,41 @@ usually use heuristics to help us to obtain a “good” solution. Many algorith
 There are various ways to classify algorithms, each with its own merits. The basic characteristic is the ability to reach optimal 
 solution: exact algorithms or heuristics.
 
+Algorithm for Travelling Salesman Problem using Ant Colony Optimization :
+
+Step 1 :- Select N number of ants.
+
+Step 2 :- Initialize pheromone matrix of the same value which has the same shape as that of the distance 
+	         matrix.
+
+Step 3 :- Calculate the visibility between the cities .
+            
+            i.e.  h = 1/d
+
+Step 4 :- Initialize one of the cities as a departure city, as it a selected city so its visibility becomes
+	         zero. As the city visited once can not be visit again.
+
+Step 5 :- Exploration of the paths is done by calculating the probability in going from selected city to
+	         the other remaining cities. 
+          
+          probability(i,j) = ( (tau(i,j))^alpha * (eta(i,j))^beta )/sigma((tau(i,j))^alpha * (eta(i,j))^beta)
+
+Step 6 :- Calculate the cumulative probability by generating the random number which is less than the 
+	         maximum cumulative value to find the next city to be visited.
+
+Step 7 :- Perform Step 4 to 6 for N number of ants to know the path / total distance travelled by each of 
+	         them. 
+
+Step 8 :- Updation of pheromone level is done by using the formula :
+            
+            tau(i,j) = (1-rho)*tau(i,j) + sigma(delta(tau(i,j)))
+
+
+Step 9 :- Repeat step 8 for all ants following different paths to get the pheromone matrix.
+
+Step 10 :- Perform the steps until the maximum number of iterations is achieved. 
+
+
 --------------------PROBABILITY OF AN ANT TO FOLLOW A PATH IS:
 
 probability(i,j) = ( (tau(i,j))^alpha * (eta(i,j))^beta )/sigma((tau(i,j))^alpha * (eta(i,j))^beta)
@@ -47,5 +82,6 @@ rho is the pheromene evapouration on the node travelled by the ant
 
 During pheromone update step, pheromone is evaporated and then deposited. Pheromone evaporation coefficient
 0 < rho < 1 determines how quick ants can forget found paths and avoid unlimited pheromone accumulation
+
  
 
